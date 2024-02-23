@@ -54,7 +54,8 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES' : ['rest_framework.permissions.AllowAny']
+    'DEFAULT_PERMISSION_CLASSES' : ['rest_framework.permissions.AllowAny'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication']
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
