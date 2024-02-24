@@ -9,7 +9,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = userModel
         fields = '__all__'
     def create(self, clean_data):
-        userObj = userModel.objects.create_user(email=clean_data['email'],username=clean_data['username'],password=clean_data['password'])
+        userObj = userModel.objects.create_user(email=clean_data['email'],password=clean_data['password'])
         userObj.save()
         return userObj
 
@@ -20,8 +20,9 @@ class UserLoginSerializer(serializers.Serializer):
     def checkUser(self, clean_data):
         print("Email : ",clean_data['email'])
         print("Password", clean_data['password'])
-        user = authenticate(username=clean_data['email'], password=clean_data['password'])
-        if user is None:
+        user = authenticate(email=clean_data['email'], password=clean_data['password'])
+        print(f'Users : {user}')
+        if not user:
             raise ValueError('User Not Found!')
         return user
 

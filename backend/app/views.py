@@ -11,7 +11,7 @@ from .validations import *
 # Create your views here.
 class DashboardView(APIView):
     def get(self, request):
-        output = [{"title": output.title, "description": output.description, 'likes': output.likes, 'shares': output.shares, 'commnets': output.comments}
+        output = [{"title": output.title, "description": output.description, 'likes': output.likes, 'shares': output.shares, 'comments': output.comments}
                   for output in Dashboard.objects.all()]
         return Response(output, status=status.HTTP_200_OK)
     

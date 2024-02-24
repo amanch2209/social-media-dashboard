@@ -56,6 +56,7 @@ function App() {
     e.preventDefault();
     client.post("/api/auth/register",{email:email, username:username, password:password})
     .then(res=>{
+      console.log(res);
       client.post("/api/auth/login",{email:email, password:password})
       .then(res=>{
         setCurrentUser(true);
@@ -79,39 +80,6 @@ function App() {
     });
   }
 
-  if(currentUser){
-    return(
-      <div>
-        <Navbar bg="dark" variant="dark">
-          <Container>
-            <Navbar.Brand>Social Media Dashboard</Navbar.Brand>
-            <Navbar.Toggle/>
-            <Navbar.Collapse className='justify-content-end'>
-              <Navbar.Text>
-                <form onSubmit={e=> submitLogout(e)}>
-                  <Button type='submit' variant='light'>Log Out</Button>
-                </form>
-              </Navbar.Text>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <div className='center'>
-          {data.map((output,id)=>(
-            <div key={id}>
-              <div>
-                <h2>Title : {output.title}</h2>
-                <h2>Description : {output.description}</h2>
-                <h2>Likes : {output.likes}</h2>
-                <h2>Shares : {output.shares}</h2>
-                <h2>Comments : {output.comments}</h2>
-              </div>
-              <hr></hr>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
   return(
     <div>
       <Navbar bg='dark' variant='dark'>
@@ -120,54 +88,120 @@ function App() {
           <Navbar.Toggle/>
           <Navbar.Collapse className='justify-content-end'>
             <Navbar.Text>
-              <Button id='form_btn' onClick={updateFormBtn} variant='light'>Register</Button>
+              <form onSubmit={e=>submitLogin(e)}>
+                <Button type='submit' variant='light'>Add New Post</Button>
+              </form>
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {
-        registrationToggle ? (
-          <div className='center'>
-            <Form onSubmit={e=>submitRegistration(e)}>
-              <Form.Group className='mb-3' controlId='formBasicEmail'>
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control type='email' placeholder='Enter Email' value={email} onChange={e=>setEmail(e.target.value)}></Form.Control>
-                <Form.Text className='text-muted'>
-                  We'll never share your email
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId='formBasicUsername'>
-                <Form.Label>Username</Form.Label>
-                <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e=>setUsername(e.target.value)}></Form.Control>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId='formBasicPassword'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control type='password' placeholder='Password' value={password} onChange={e=>setPassword(e.target.value)}></Form.Control>
-              </Form.Group>
-              <Button variant='primary' type='submit'>Submit</Button>
-            </Form>
-          </div>
-        ) : (
-          <div className='center'>
-            <Form onSubmit={e=>submitLogin(e)}>
-              <Form.Group className='mb-3' controlId='formBasicEmail'>
-                <Form.Label>Email</Form.Label>
-                <Form.Control type='email' placeholder='Enter Email' value={email} onChange={e=>setEmail(e.target.value)}></Form.Control>
-                <Form.Text className='text-muted'>
-                  We'll never share your email
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId='formBasicPassword'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control type='password' placeholder='Password' value={password} onChange={e=>setPassword(e.target.value)}></Form.Control>
-              </Form.Group>
-              <Button variant='primary' type='submit'>Submit</Button>
-            </Form>
-          </div>
-        )
-      }
+      <div className='center'>
+        <div className='flex-column'>
+          {data.map((output,id)=>(
+            <div key={id} className='shadow p-3 mb-5 bg-white rounded'>
+              <div>
+                <h4><span className='text-color'>Title :</span> {output.title}</h4>
+                <h4><span className='text-color'>Description :</span> {output.description}</h4>
+                <h4><span className='text-color'>Likes :</span> {output.likes}</h4>
+                <h4><span className='text-color'>Shares :</span> {output.shares}</h4>
+                <h4><span className='text-color'>Comments :</span> {output.comments}</h4>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
+
+  // if(currentUser){
+  //   return(
+  //     <div>
+  //       <Navbar bg="dark" variant="dark">
+  //         <Container>
+  //           <Navbar.Brand>Social Media Dashboard</Navbar.Brand>
+  //           <Navbar.Toggle/>
+  //           <Navbar.Collapse className='justify-content-end'>
+  //             <Navbar.Text>
+  //               <form onSubmit={e=> submitLogout(e)}>
+  //                 <Button type='submit' variant='light'>Log Out</Button>
+  //               </form>
+  //             </Navbar.Text>
+  //           </Navbar.Collapse>
+  //         </Container>
+  //       </Navbar>
+  //       <div className='center'>
+  //         {data.map((output,id)=>(
+  //           <div key={id}>
+  //             <div>
+  //               <h2>Title : {output.title}</h2>
+  //               <h2>Description : {output.description}</h2>
+  //               <h2>Likes : {output.likes}</h2>
+  //               <h2>Shares : {output.shares}</h2>
+  //               <h2>Comments : {output.comments}</h2>
+  //             </div>
+  //             <hr></hr>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  // return(
+  //   <div>
+  //     <Navbar bg='dark' variant='dark'>
+  //       <Container>
+  //         <Navbar.Brand>Social Media Dashboard</Navbar.Brand>
+  //         <Navbar.Toggle/>
+  //         <Navbar.Collapse className='justify-content-end'>
+  //           <Navbar.Text>
+  //             <Button id='form_btn' onClick={updateFormBtn} variant='light'>Register</Button>
+  //           </Navbar.Text>
+  //         </Navbar.Collapse>
+  //       </Container>
+  //     </Navbar>
+  //     {
+  //       registrationToggle ? (
+  //         <div className='center'>
+  //           <Form onSubmit={e=>submitRegistration(e)}>
+  //             <Form.Group className='mb-3' controlId='formBasicEmail'>
+  //               <Form.Label>Email Address</Form.Label>
+  //               <Form.Control type='email' placeholder='Enter Email' value={email} onChange={e=>setEmail(e.target.value)}></Form.Control>
+  //               <Form.Text className='text-muted'>
+  //                 We'll never share your email
+  //               </Form.Text>
+  //             </Form.Group>
+  //             <Form.Group className='mb-3' controlId='formBasicUsername'>
+  //               <Form.Label>Username</Form.Label>
+  //               <Form.Control type='text' placeholder='Enter Username' value={username} onChange={e=>setUsername(e.target.value)}></Form.Control>
+  //             </Form.Group>
+  //             <Form.Group className='mb-3' controlId='formBasicPassword'>
+  //               <Form.Label>Password</Form.Label>
+  //               <Form.Control type='password' placeholder='Password' value={password} onChange={e=>setPassword(e.target.value)}></Form.Control>
+  //             </Form.Group>
+  //             <Button variant='primary' type='submit'>Submit</Button>
+  //           </Form>
+  //         </div>
+  //       ) : (
+  //         <div className='center'>
+  //           <Form onSubmit={e=>submitLogin(e)}>
+  //             <Form.Group className='mb-3' controlId='formBasicEmail'>
+  //               <Form.Label>Email</Form.Label>
+  //               <Form.Control type='email' placeholder='Enter Email' value={email} onChange={e=>setEmail(e.target.value)}></Form.Control>
+  //               <Form.Text className='text-muted'>
+  //                 We'll never share your email
+  //               </Form.Text>
+  //             </Form.Group>
+  //             <Form.Group className='mb-3' controlId='formBasicPassword'>
+  //               <Form.Label>Password</Form.Label>
+  //               <Form.Control type='password' placeholder='Password' value={password} onChange={e=>setPassword(e.target.value)}></Form.Control>
+  //             </Form.Group>
+  //             <Button variant='primary' type='submit'>Submit</Button>
+  //           </Form>
+  //         </div>
+  //       )
+  //     }
+  //   </div>
+  // )
 }
 
 export default App;
