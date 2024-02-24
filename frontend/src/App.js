@@ -35,12 +35,16 @@ function App() {
   },[]);
 
   useEffect(()=>{
+    fetchData();
+  }, []);
+
+  function fetchData(){
     client.get('/api/dashboard')
     .then(res=>{
       setData(res.data);
     })
-    .catch(err=>{ });
-  }, []);
+    .catch(err=>{});
+  }
 
   function updateFormBtn(){
     if(registrationToggle){
@@ -80,6 +84,20 @@ function App() {
     });
   }
 
+  function createPost(e){
+    e.preventDefault();
+    const title = prompt('Enter Title');
+    const description = prompt('Enter Description');
+    const likes = prompt('Enter Likes');
+    const shares = prompt('Enter Shares');
+    const comments = prompt('Enter Comments');
+    client.post('/api/dashboard',{title:title, description:description, likes:likes, shares:shares, comments:comments})
+    .then(res=>{
+      fetchData();
+    })
+    .catch(err=>{    })
+  }
+
   return(
     <div>
       <Navbar bg='dark' variant='dark'>
@@ -88,7 +106,7 @@ function App() {
           <Navbar.Toggle/>
           <Navbar.Collapse className='justify-content-end'>
             <Navbar.Text>
-              <form onSubmit={e=>submitLogin(e)}>
+              <form onSubmit={e=>createPost(e)}>
                 <Button type='submit' variant='light'>Add New Post</Button>
               </form>
             </Navbar.Text>
