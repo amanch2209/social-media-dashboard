@@ -33,4 +33,4 @@ npm start
 ```
 ## Challenges
 1) The most challenging part of building the application was dealing with the CORS policies. You might receive the error that you cannot access your api because CORS policy has blocked it. You can resolve the error by adding corsmiddleware in your settings.py and allow some sources to access the headers (For more information checkout my settings.py).
-2) The most frustration challenge that I am currently facing is building logic for user authentication where only those users who have registered to the portal which have the access to manipulatde or read the dashboard.
+2) The most frustrating challenge that I am currently facing is building logic for user authentication where only those users who have registered to the portal which have the access to manipulatde or read the dashboard.
