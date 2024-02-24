@@ -11,12 +11,12 @@ from .validations import *
 # Create your views here.
 class DashboardView(APIView):
     def get(self, request):
-        output = [{"title": output.title, "description": output.description, 'likes': output.likes, 'shares': output.shares, 'commnets': output.commnets}
+        output = [{"title": output.title, "description": output.description, 'likes': output.likes, 'shares': output.shares, 'commnets': output.comments}
                   for output in Dashboard.objects.all()]
         return Response(output, status=status.HTTP_200_OK)
     
     def post(self, request):
-        serializer = ReactSerializer(data=request.data)
+        serializer = DashboardSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
@@ -25,7 +25,7 @@ class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
         clean_data = custom_validation(request.data)
-        serializer = UserRegisterSerializer(data=clean_data)
+        serializer = UserRegistrationSerializer(data=clean_data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.create(clean_data)
             if user:
@@ -59,4 +59,4 @@ class UserView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Responsne({'user':serializer.data},status=status.HTTP_200_OK)
+        return Response({'user':serializer.data},status=status.HTTP_200_OK)
